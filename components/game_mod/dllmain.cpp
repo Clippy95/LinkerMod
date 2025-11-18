@@ -108,6 +108,7 @@ BOOL GameMod_Init(HMODULE hModule)
 	
 	DWORD flags = 0x1; // DVAR_ARCHIVED only
 	PatchMemory(0x004A3921, (PBYTE)&flags, 4); // cg_fov
+	PatchMemory(0x004A39C1, (PBYTE)&flags, 4); // cg_fovScale
 	PatchMemory(0x006CA4D6, (PBYTE)&flags, 4); // r_lodScaleRigid
 	PatchMemory(0x006CA504, (PBYTE)&flags, 4); // r_lodBiasRigid
 	PatchMemory(0x006CA53A, (PBYTE)&flags, 4); // r_lodScaleSkinned
@@ -214,6 +215,12 @@ BOOL GameMod_Init(HMODULE hModule)
 	Detours::X86::DetourFunction((PBYTE)0x00587DC8, (PBYTE)&Con_ToggleConsole, Detours::X86Option::USE_CALL);
 	Detours::X86::DetourFunction((PBYTE)0x00587633, (PBYTE)&Con_ToggleConsole, Detours::X86Option::USE_CALL);
 	PatchMemory(0x0058761C, (PBYTE)"\xEB", 1);
+
+	//
+	// Removes the need to type \\ or / to send console commands
+	//
+	PatchMemory(0x0051223B, (PBYTE)"\xE9",1);
+	PatchJump(0x0051223B, (PBYTE)0x00512227);
 
 	//
 	// Run console/packet events even during map load (Com_EventLoop() during DB wait)
