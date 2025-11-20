@@ -222,6 +222,8 @@ BOOL GameMod_Init(HMODULE hModule)
 	PatchMemory(0x0051223B, (PBYTE)"\xE9",1);
 	PatchJump(0x0051223B, (PBYTE)0x00512227);
 
+	Con_ImproveConsoleInfo();
+
 	//
 	// Run console/packet events even during map load (Com_EventLoop() during DB wait)
 	//
