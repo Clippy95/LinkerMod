@@ -114,5 +114,38 @@
 
 #include "reshade.h"
 
+// i'll use this until i get safetyhook in
+typedef struct __declspec(align(16)) {
+    __m128 xmm[8];
+    
+    inline void save() {
+        __asm {
+            mov eax, this
+            movaps [eax + 0],   xmm0
+            movaps [eax + 16],  xmm1
+            movaps [eax + 32],  xmm2
+            movaps [eax + 48],  xmm3
+            movaps [eax + 64],  xmm4
+            movaps [eax + 80],  xmm5
+            movaps [eax + 96],  xmm6
+            movaps [eax + 112], xmm7
+        }
+    }
+    
+    inline void restore() {
+        __asm {
+            mov eax, this
+            movaps xmm0, [eax + 0]
+            movaps xmm1, [eax + 16]
+            movaps xmm2, [eax + 32]
+            movaps xmm3, [eax + 48]
+            movaps xmm4, [eax + 64]
+            movaps xmm5, [eax + 80]
+            movaps xmm6, [eax + 96]
+            movaps xmm7, [eax + 112]
+        }
+    }
+} xmm_context;
+
 #define GM_NET_VERSION 0x01
 #define GM_USE_PROXY   false

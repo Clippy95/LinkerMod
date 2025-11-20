@@ -328,3 +328,42 @@ void __declspec(naked) mfh_CG_DrawBulletImpacts2()
 		jmp [dwJmp]
 	}
 }
+
+void __stdcall CG_CalculateWeaponMovement_Debug_midhook() {
+	dvar_s* cg_fovscale = *(dvar_s**)0x2FF66A8;
+	dvar_s* cg_fov_default = *(dvar_s**)0x2FF669C;
+	xmm_context thisxmmm{};
+
+	if (cg_fovComp_enable->current.integer >= 2) {
+
+		thisxmmm.save();
+
+		thisxmmm.xmm[3].m128_f32[0] *= cg_fovscale->current.value;
+		thisxmmm.restore();
+
+	}
+	else if(!cg_fovComp_enable->current.integer) {
+		thisxmmm.save();
+		thisxmmm.xmm[3].m128_f32[0] = cg_fov_default->current.value;
+		thisxmmm.restore();
+	}
+}
+
+
+void __declspec(naked)  CG_CalculateWeaponMovement_Debug_midhook_stub() {
+	static DWORD weapon_dwJmp = 0x00797C1B;
+
+	__asm {
+		pushad
+		pushfd
+		call CG_CalculateWeaponMovement_Debug_midhook
+		popfd
+		popad
+
+		subss   xmm3, xmm2
+		xorps   xmm2, xmm2
+		jmp weapon_dwJmp
+
+	}
+}
+

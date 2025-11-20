@@ -223,6 +223,10 @@ BOOL GameMod_Init(HMODULE hModule)
 	PatchMemory(0x0051223B, (PBYTE)"\xE9",1);
 	PatchJump(0x0051223B, (PBYTE)0x00512227);
 
+	
+	PatchMemory(0x00797C14, (PBYTE)"\xE9", 1);
+	PatchJump(0x00797C14, (PBYTE)CG_CalculateWeaponMovement_Debug_midhook_stub);
+
 	Con_ImproveConsoleInfo();
 
 	Patch_ScreenPlacement();

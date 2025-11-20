@@ -232,6 +232,8 @@ extern dvar_s* r_streamCheckAabb;
 extern dvar_s* safeArea_horizontal;
 extern dvar_s* safeArea_vertical;
 
+extern dvar_s* cg_fovComp_enable;
+
 extern bool com_cfg_readOnly_default;
 extern dvar_s* com_cfg_readOnly;
 

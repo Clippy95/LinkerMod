@@ -43,6 +43,7 @@ dvar_s* com_cfg_readOnly = NULL;
 
 dvar_s* safeArea_horizontal;
 dvar_s* safeArea_vertical;
+dvar_s* cg_fovComp_enable;
 
 const char* r_showTessNames[] =
 {
@@ -138,6 +139,16 @@ void __cdecl CG_RegisterDvars()
 
 	safeArea_horizontal = Dvar_RegisterFloat("safeArea_horizontal", 1.0f, 0.15f, 1.0f, DVAR_ARCHIVE, "Horizontal safe area as a fraction of the screen width");
 	safeArea_vertical = Dvar_RegisterFloat("safeArea_vertical", 1.0f, 0.15f, 1.0f, DVAR_ARCHIVE, "Vertical safe area as a fraction of the screen height");
+
+	static const char* cg_fovComp_enable_names[] =
+	{
+		"off",
+		"on",
+		"on & effected by cg_fovscale",
+		NULL
+	};
+
+	cg_fovComp_enable = Dvar_RegisterEnum("cg_fovComp_enable", cg_fovComp_enable_names,1, DVAR_ARCHIVE, "Enables fovComp behaviour");
 
 	radiant_live = Dvar_RegisterInt("radiant_live", 0, 0, 1, DVAR_NOFLAG, "Enable live Radiant updates in the game");
 	radiant_livePort = Dvar_RegisterInt("radiant_livePort", 3700, 0, 65535, DVAR_NOFLAG, "Network port for Radiant");
