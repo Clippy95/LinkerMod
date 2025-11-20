@@ -43,7 +43,7 @@ bool __cdecl R_Cinematic_BinkOpen(const char *filename, unsigned int playbackFla
 	return R_Cinematic_BinkOpenPath(filepath, playbackFlags, errText);
 }
 
-bool R_Cinematic_BinkOpenPath(const char *filepath, unsigned int playbackFlags, char *errText)
+bool R_Cinematic_BinkOpenPath_ASM(const char* filepath, unsigned int playbackFlags, char* errText)
 {
 	__asm
 	{
@@ -56,4 +56,15 @@ bool R_Cinematic_BinkOpenPath(const char *filepath, unsigned int playbackFlags, 
 		add esp, 8
 	}
 }
+
+bool R_Cinematic_BinkOpenPath(const char* filepath, unsigned int playbackFlags, char* errText) {
+	auto result = R_Cinematic_BinkOpenPath_ASM(filepath, playbackFlags, errText);
+
+	dvar_s* ui_playCoastOutroMovie = *(dvar_s**)0x02598F64;
+	if (ui_playCoastOutroMovie && ui_playCoastOutroMovie->current.enabled)
+		Dvar_SetBool(ui_playCoastOutroMovie, false);
+	return result;
+}
+
+
 
