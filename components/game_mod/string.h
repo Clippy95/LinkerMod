@@ -19,7 +19,7 @@
 	template <size_t sub_len>                                                 \
 	inline bool FUNC(const char *string, size_t str_len, char(&sub)[sub_len]) \
 	{                                                                         \
-		return FUNC(str, str_len, sub, sub_len);                              \
+		return FUNC(string, str_len, sub, sub_len);                              \
 	}
 
 bool Str_StartsWith(const char *string, size_t str_len, const char *sub, size_t sub_len);

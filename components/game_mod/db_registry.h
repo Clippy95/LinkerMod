@@ -1,6 +1,8 @@
 #pragma once
 #include "bg_weapons_def.h"
 
+#include "r_material.h"
+
 #define MAX_MATERIAL_POOL_SIZE	0x1000
 #define MAX_XMODEL_POOL_SIZE	0x3E8
 

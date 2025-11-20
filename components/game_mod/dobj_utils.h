@@ -5,6 +5,8 @@
 
 struct XAnimTree_s;
 
+struct XModel;
+
 struct DSkelPartBits
 {
 	int anim[5];

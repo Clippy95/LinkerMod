@@ -166,7 +166,7 @@ void Scr_PrintSourcePos(scriptInstance_t inst, int channel, const char *filename
 {
 	ASSERT(filename);
 
-	char *type = "";
+	const char *type = "";
 	char line[1024];
 	unsigned int col;
 	unsigned int lineNum = Scr_GetLineInfo(buf, sourcePos, &col, line, 0);
@@ -280,6 +280,9 @@ void RuntimeError(scriptInstance_t inst, const char *codePos, unsigned int index
 
 	ASSERT(Scr_IsInOpcodeMemory(inst, codePos));
 
+	// Determine if user needs message box notification
+	bool abort_on_error = gScrVmPub[inst].abort_on_error || gScrVmPub[inst].terminal_error;
+
 	if (gScrVmPub[inst].debugCode)
 	{
 		Com_Printf(24, "%s\n", msg);
@@ -290,8 +293,7 @@ void RuntimeError(scriptInstance_t inst, const char *codePos, unsigned int index
 		goto error;
 	}
 
-	// Determine if user needs message box notification
-	bool abort_on_error = gScrVmPub[inst].abort_on_error || gScrVmPub[inst].terminal_error;
+
 
 #if SCRIPT_DEBUGGER
 	if (Scr_IgnoreErrors(inst) && inst != SCRIPTINSTANCE_CLIENT)

@@ -1565,6 +1565,8 @@ void R_StreamUpdate_EndQuery_Internal()
 		if (!request)
 			return;
 
+		stream_status status{};
+
 		if (sortedIndex < streamFrontendGlob.sortedImageCount)
 		{
 			int imagePartIndex = 0;
@@ -1592,7 +1594,7 @@ void R_StreamUpdate_EndQuery_Internal()
 					goto LABEL_23;
 			}
 
-			stream_status status = R_StreamRequestImageAllocation(request, image, true, streamFrontendGlob.imageImportance[imagePartIndex]);
+			status = R_StreamRequestImageAllocation(request, image, true, streamFrontendGlob.imageImportance[imagePartIndex]);
 
 			if (status == STREAM_STATUS_INPROGRESS)
 			{
