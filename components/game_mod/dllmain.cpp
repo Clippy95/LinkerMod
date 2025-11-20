@@ -1,5 +1,6 @@
 #define G_VERSION 1, 3, 2
 #include "stdafx.h"
+#include "screen_placement.h"
 
 // Defined in patch_misc.cpp
 #if USE_MISC_PATCHES
@@ -223,6 +224,8 @@ BOOL GameMod_Init(HMODULE hModule)
 	PatchJump(0x0051223B, (PBYTE)0x00512227);
 
 	Con_ImproveConsoleInfo();
+
+	Patch_ScreenPlacement();
 
 	//
 	// Run console/packet events even during map load (Com_EventLoop() during DB wait)

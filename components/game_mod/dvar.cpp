@@ -41,6 +41,9 @@ dvar_s* r_streamCheckAabb = NULL;
 bool com_cfg_readOnly_default = false;
 dvar_s* com_cfg_readOnly = NULL;
 
+dvar_s* safeArea_horizontal;
+dvar_s* safeArea_vertical;
+
 const char* r_showTessNames[] =
 {
 	"off",
@@ -131,6 +134,10 @@ void __cdecl CG_RegisterDvars()
 
 	perk_weapRateEnhanced = Dvar_RegisterInt("perk_weapRateEnhanced", 0, 0, 1, DVAR_CHEAT, "Double tap will shoot 2x the bullets for every shot");
 	perk_fastOffhandRate = Dvar_RegisterFloat("perk_fastOffhandRate", 0.5f, 0.01f, 1.0f, DVAR_CHEAT, "Multiplier for specialty_fastoffhand");
+
+
+	safeArea_horizontal = Dvar_RegisterFloat("safeArea_horizontal", 1.0f, 0.15f, 1.0f, DVAR_ARCHIVE, "Horizontal safe area as a fraction of the screen width");
+	safeArea_vertical = Dvar_RegisterFloat("safeArea_vertical", 1.0f, 0.15f, 1.0f, DVAR_ARCHIVE, "Vertical safe area as a fraction of the screen height");
 
 	radiant_live = Dvar_RegisterInt("radiant_live", 0, 0, 1, DVAR_NOFLAG, "Enable live Radiant updates in the game");
 	radiant_livePort = Dvar_RegisterInt("radiant_livePort", 3700, 0, 65535, DVAR_NOFLAG, "Network port for Radiant");

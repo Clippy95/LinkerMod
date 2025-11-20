@@ -115,4 +115,4 @@
 #include "reshade.h"
 
 #define GM_NET_VERSION 0x01
-#define GM_USE_PROXY   true
+#define GM_USE_PROXY   false
